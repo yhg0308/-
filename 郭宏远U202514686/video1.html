@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>舞蹈教学 1 - 高雅人士舞蹈教学</title>
+    <!-- Tailwind CSS v3 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#D4AF37', // 金色
+                        secondary: '#111111', // 黑色
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #111111;
+            color: #D4AF37;
+        }
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            background-color: rgba(212, 175, 55, 0.9);
+            color: #111111;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .back-button:hover {
+            background-color: #D4AF37;
+            transform: scale(1.1);
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 56.25%;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(212, 175, 55, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        .play-button:hover {
+            background-color: #D4AF37;
+            transform: scale(1.1);
+        }
+        .play-button i {
+            color: #111111;
+            font-size: 2rem;
+            margin-left: 5px;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .fade-out {
+            animation: fadeOut 0.5s ease forwards;
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen fade-in">
+    <!-- 返回按钮 -->
+    <div class="back-button" onclick="goBack()">
+        <i class="fa fa-arrow-left"></i>
+    </div>
+    
+    <!-- 视频页面内容 -->
+    <div class="container mx-auto px-4 py-12">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold mb-4 text-primary">舞蹈教学 1</h1>
+            <div class="w-24 h-1 bg-primary mx-auto"></div>
+        </header>
+        
+        <main class="mt-12">
+            <div class="video-container">
+                <!-- 视频播放器占位符 -->
+                <div class="video-placeholder" id="video-placeholder">
+                    <div class="play-button" onclick="playVideo()">
+                        <i class="fa fa-play"></i>
+                    </div>
+                    <p class="text-xl text-gray-300">点击播放视频</p>
+                </div>
+                <!-- 视频播放器 (初始隐藏) -->
+                <video id="video-player" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;" controls></video>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 返回主页函数
+        function goBack() {
+            document.body.classList.add('fade-out');
+            setTimeout(function() {
+                window.location.href = 'index.html';
+            }, 500);
+        }
+        
+        // 播放视频函数
+        function playVideo() {
+            document.getElementById('video-placeholder').style.display = 'none';
+            const videoPlayer = document.getElementById('video-player');
+            videoPlayer.style.display = 'block';
+            // 视频1.mp4
+            videoPlayer.src = "视频1.mp4";
+            // videoPlayer.play();
+         
+        }
+    </script>
+</body>
+</html>
