@@ -1251,19 +1251,21 @@ $searchInput.addEventListener('input', () => {
 // ======================== MENU BUTTONS ========================
 document.getElementById('btn-start').addEventListener('click', () => {
   Audio.resume();
+  // Start game immediately — audio loads in background
+  startGame();
   Audio.init().then(() => {
-    startGame();
-  }).catch(() => {
-    // Audio init may fail, still start game
-    startGame();
-  });
+    // Audio ready: kick in ambient buzz if game is still active
+    if (currentState === STATE.PLAYING || currentState === STATE.PAUSED) {
+      Audio.setupMosquitoPanners(MOSQUITO_COUNT);
+      Audio.startAmbientBuzz();
+    }
+  }).catch(() => {});
 });
 
 document.getElementById('btn-leaderboard').addEventListener('click', () => {
   Audio.resume();
-  Audio.init().then(() => {
-    showLeaderboard();
-  });
+  showLeaderboard();
+  Audio.init().catch(() => {});
 });
 
 document.getElementById('btn-back-from-leaderboard').addEventListener('click', () => {

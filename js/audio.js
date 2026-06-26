@@ -37,15 +37,18 @@ class AudioSystem {
       this.masterGain.gain.value = 0.5;
       this.masterGain.connect(this.ctx.destination);
 
-      // Load mosquito call mp3
-      await this._loadMosquitoCall();
-
-      // Pre-generate SFX
+      // Pre-generate SFX immediately (CPU-only, near-instant)
       this._generateSlapSFX();
       this._generateZapSFX();
       this._generateBeepSFX();
 
+      // Mark initialized right away — SFX and ambient buzz work now
       this.initialized = true;
+
+      // Load mosquito call MP3 in background (large file, don't block)
+      this._loadMosquitoCall().catch(e => {
+        console.warn('Failed to load mosquito call mp3:', e);
+      });
     } catch (e) {
       console.warn('Audio init failed:', e);
     }
@@ -150,6 +153,7 @@ class AudioSystem {
    * Set up spatial panners for N mosquitoes (10 left, 10 right)
    */
   setupMosquitoPanners(count) {
+    if (!this.ctx) return; // Audio not initialized yet
     // Clean up old
     this.mosquitoPanners = [];
     for (let i = 0; i < count; i++) {
