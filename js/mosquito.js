@@ -34,7 +34,7 @@ class Mosquito {
     this.vy = 0;
 
     // Base speed (px per second)
-    this.baseSpeed = 80 + Math.random() * 80;
+    this.baseSpeed = 50 + Math.random() * 50;
 
     // Current speed multiplier
     this.speedMultiplier = 1.0;
