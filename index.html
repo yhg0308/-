@@ -1,260 +1,193 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高雅人士舞蹈教学</title>
-    <!-- Tailwind CSS v3 -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- GSAP 动画库 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#D4AF37', // 金色
-                        secondary: '#111111', // 黑色
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                    transitionProperty: {
-                        'height': 'height',
-                        'spacing': 'margin, padding',
-                    }
-                }
-            }
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .text-shadow {
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            }
-            .hover-scale {
-                transition: transform 0.3s ease;
-            }
-            .hover-scale:hover {
-                transform: scale(1.05);
-            }
-            .page-transition {
-                opacity: 0;
-                transition: opacity 0.5s ease;
-            }
-            .page-transition.active {
-                opacity: 1;
-            }
-        }
-    </style>
-    <style>
-        body {
-            background-color: #111111;
-            color: #D4AF37;
-            font-family: 'Inter', system-ui, sans-serif;
-        }
-        .dance-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        .dance-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-        }
-        .dance-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-        }
-        .dance-card:hover::after {
-            opacity: 0.5;
-        }
-        .dance-title {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            z-index: 10;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-        }
-        .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 100;
-            background-color: rgba(212, 175, 55, 0.9);
-            color: #111111;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .back-button:hover {
-            background-color: #D4AF37;
-            transform: scale(1.1);
-        }
-        .video-container {
-            position: relative;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        /* 页面过渡动画 */
-        .fade-in {
-            animation: fadeIn 0.5s ease forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .fade-out {
-            animation: fadeOut 0.5s ease forwards;
-        }
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🦟 灭蚊大战 - Mosquito Slayer</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
-<body class="min-h-screen">
-    <!-- 主页内容 -->
-    <div id="home-page" class="container mx-auto px-4 py-12">
-        <header class="text-center mb-16">
-            <h1 class="text-5xl md:text-6xl font-bold mb-4 text-primary">高雅人士舞蹈教学</h1>
-            <div class="w-24 h-1 bg-primary mx-auto"></div>
-        </header>
-        
-        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- 舞蹈卡片 1 -->
-            <div class="dance-card hover-scale" onclick="navigateToVideo('video1.html')">
-                <div class="aspect-w-16 aspect-h-9 bg-gray-800">
-                    <img src="图片1.jpg" alt="图片1" width="300">
-                    <div class="w-full h-64 bg-gray-700 flex items-center justify-center">
-                        <i class="fa fa-image text-4xl text-gray-500"></i>
-                    </div>
-                </div>
-                <div class="dance-title">舞蹈教学 1</div>
-            </div>
-            
-            <!-- 舞蹈卡片 2 -->
-            <div class="dance-card hover-scale" onclick="navigateToVideo('video2.html')">
-                <div class="aspect-w-16 aspect-h-9 bg-gray-800">
-                    <img src="图片2.jpg" alt="图片2" width="300">
-                    <div class="w-full h-64 bg-gray-700 flex items-center justify-center">
-                        <i class="fa fa-image text-4xl text-gray-500"></i>
-                    </div>
-                </div>
-                <div class="dance-title">舞蹈教学 2</div>
-            </div>
-            
-            <!-- 舞蹈卡片 3 -->
-            <div class="dance-card hover-scale" onclick="navigateToVideo('video3.html')">
-                <div class="aspect-w-16 aspect-h-9 bg-gray-800">
-                    <img src="图片3.jpg" alt="图片3" width="300">
-                    <div class="w-full h-64 bg-gray-700 flex items-center justify-center">
-                        <i class="fa fa-image text-4xl text-gray-500"></i>
-                    </div>
-                </div>
-                <div class="dance-title">舞蹈教学 3</div>
-            </div>
-            
-            <!-- 舞蹈卡片 4 -->
-            <div class="dance-card hover-scale" onclick="navigateToVideo('video4.html')">
-                <div class="aspect-w-16 aspect-h-9 bg-gray-800">
-                    <img src="图片4.jpg" alt="图片4" width="300">
-                    <div class="w-full h-64 bg-gray-700 flex items-center justify-center">
-                        <i class="fa fa-image text-4xl text-gray-500"></i>
-                    </div>
-                </div>
-                <div class="dance-title">舞蹈教学 4</div>
-            </div>
-            
-            <!-- 舞蹈卡片 5 -->
-            <div class="dance-card hover-scale" onclick="navigateToVideo('video5.html')">
-                <div class="aspect-w-16 aspect-h-9 bg-gray-800">
-                    <img src="图片5.jpg" alt="图片5" width="300">
-                    <div class="w-full h-64 bg-gray-700 flex items-center justify-center">
-                        <i class="fa fa-image text-4xl text-gray-500"></i>
-                    </div>
-                </div>
-                <div class="dance-title">舞蹈教学 5</div>
-            </div>
-            
-            <!-- 舞蹈卡片 6 -->
-            <div class="dance-card hover-scale" onclick="navigateToVideo('video6.html')">
-                <div class="aspect-w-16 aspect-h-9 bg-gray-800">
-                    <img src="图片6.jpg" alt="图片6" width="300">
-                    <div class="w-full h-64 bg-gray-700 flex items-center justify-center">
-                        <i class="fa fa-image text-4xl text-gray-500"></i>
-                    </div>
-                </div>
-                <div class="dance-title">舞蹈教学 6</div>
-            </div>
-        </main>
-    </div>
+<body>
 
-    <script>
-        // 页面加载动画
-        document.addEventListener('DOMContentLoaded', function() {
-            gsap.from("header h1", { 
-                y: -50, 
-                opacity: 0, 
-                duration: 1, 
-                ease: "power3.out" 
-            });
-            
-            gsap.from(".dance-card", { 
-                y: 50, 
-                opacity: 0, 
-                duration: 0.8, 
-                stagger: 0.1, 
-                ease: "back.out(1.7)",
-                delay: 0.5
-            });
-        });
-        
-        // 页面导航函数
-        function navigateToVideo(pageUrl) {
-            // 添加淡出动画
-            document.body.classList.add('fade-out');
-            
-            // 动画结束后导航到新页面
-            setTimeout(function() {
-                window.location.href = pageUrl;
-            }, 500);
-        }
-    </script>
+<!-- ==================== LOADING SCREEN ==================== -->
+<div id="loading-screen" class="screen">
+  <div class="loading-content">
+    <div class="loading-logo">🦟</div>
+    <h2>灭蚊大战</h2>
+    <div class="loading-bar-container">
+      <div class="loading-bar-fill" id="loading-bar"></div>
+    </div>
+    <p id="loading-text">正在加载素材...</p>
+  </div>
+</div>
+
+<!-- ==================== MAIN MENU SCREEN ==================== -->
+<div id="menu-screen" class="screen hidden">
+  <div class="menu-bg-mosquitoes" id="menu-mosquitoes"></div>
+  <div class="menu-content">
+    <div class="menu-logo-container">
+      <div class="menu-logo-pulse">🦟</div>
+      <h1 class="menu-title">灭蚊大战</h1>
+      <p class="menu-subtitle">Mosquito Slayer</p>
+    </div>
+    <div class="menu-buttons">
+      <button class="btn btn-primary btn-glow" id="btn-start">
+        <span class="btn-icon">⚔️</span> 开始游戏
+      </button>
+      <button class="btn btn-secondary" id="btn-leaderboard">
+        <span class="btn-icon">🏆</span> 查看排行榜
+      </button>
+    </div>
+    <div class="menu-footer">
+      <p>🖱️ 鼠标操作 | 🔢 数字键1-4切换道具 | ESC 暂停</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== GAME SCREEN ==================== -->
+<div id="game-screen" class="screen hidden">
+  <!-- Game Canvas -->
+  <canvas id="game-canvas"></canvas>
+
+  <!-- Top-left HUD: Stamina + Kills -->
+  <div id="hud-top-left">
+    <div id="stamina-bar-container">
+      <div id="stamina-bar-fill"></div>
+      <span id="stamina-text">100/100</span>
+    </div>
+    <div id="kill-count-display">
+      <span class="trophy-icon">🏆</span>
+      <span id="kill-count-text">0</span>
+    </div>
+  </div>
+
+  <!-- Top-right HUD: Coil count -->
+  <div id="hud-top-right">
+    <div id="coil-count-display">
+      <span>🪴</span>
+      <span id="coil-placed-text">0</span>
+      <span>/</span>
+      <span id="coil-max-text">1</span>
+    </div>
+  </div>
+
+  <!-- Pause/Exit button -->
+  <button id="btn-pause" title="暂停/退出 (ESC)">✕</button>
+
+  <!-- Bottom: Tool bar -->
+  <div id="tool-bar">
+    <div class="tool-slot" data-tool="0" id="tool-slot-0">
+      <div class="tool-key">1</div>
+      <div class="tool-icon">🖐️</div>
+      <div class="tool-name">手</div>
+      <div class="tool-cost">-5</div>
+      <div class="tool-selected-indicator"></div>
+    </div>
+    <div class="tool-slot locked" data-tool="1" id="tool-slot-1">
+      <div class="tool-key">2</div>
+      <div class="tool-icon">🪰</div>
+      <div class="tool-name">苍蝇拍</div>
+      <div class="tool-cost">-2</div>
+      <div class="tool-lock">🔒</div>
+      <div class="tool-selected-indicator"></div>
+    </div>
+    <div class="tool-slot locked" data-tool="2" id="tool-slot-2">
+      <div class="tool-key">3</div>
+      <div class="tool-icon">⚡</div>
+      <div class="tool-name">电蚊拍</div>
+      <div class="tool-cost">-1</div>
+      <div class="tool-lock">🔒</div>
+      <div class="tool-selected-indicator"></div>
+    </div>
+    <div class="tool-slot locked" data-tool="3" id="tool-slot-3">
+      <div class="tool-key">4</div>
+      <div class="tool-icon">🪴</div>
+      <div class="tool-name">蚊香</div>
+      <div class="tool-cost">-10</div>
+      <div class="tool-lock">🔒</div>
+      <div class="tool-selected-indicator"></div>
+    </div>
+  </div>
+
+  <!-- Newbie hint -->
+  <div id="newbie-hint" class="hidden">
+    <div class="hint-bubble">
+      💡 再击杀 <span id="hint-kills-remaining">1</span> 只，解锁强力苍蝇拍！
+    </div>
+  </div>
+
+  <!-- Electric swatter drag cursor (follows mouse during drag) -->
+  <div id="electric-cursor" class="hidden">
+    <img src="assets/电蚊拍（常态）.png" alt="电蚊拍">
+    <div class="electric-arc"></div>
+  </div>
+
+  <!-- Coil placement mode indicator -->
+  <div id="coil-placement-indicator" class="hidden">
+    <div class="placement-circle"></div>
+    <span>点击场景放置蚊香</span>
+  </div>
+</div>
+
+<!-- ==================== LEADERBOARD SCREEN ==================== -->
+<div id="leaderboard-screen" class="screen hidden">
+  <div class="leaderboard-container">
+    <div class="leaderboard-header">
+      <button class="btn-back" id="btn-back-from-leaderboard">← 返回</button>
+      <h2>🏆 排行榜</h2>
+    </div>
+    <div class="leaderboard-search">
+      <input type="text" id="search-input" placeholder="🔍 搜索玩家昵称...">
+      <span id="search-no-result" class="hidden">未找到该玩家</span>
+    </div>
+    <div class="leaderboard-table-wrap">
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>排名</th>
+            <th>玩家昵称</th>
+            <th>击杀数</th>
+            <th>达成时间</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-tbody">
+        </tbody>
+      </table>
+      <div id="leaderboard-empty" class="hidden">
+        <p>暂无记录</p>
+        <p class="sub">开始游戏并创造你的第一个记录吧！</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAUSE / END MODAL OVERLAY ==================== -->
+<div id="modal-overlay" class="hidden">
+  <div class="modal-bg-blur"></div>
+  <div class="modal-box" id="modal-box">
+    <!-- Content filled dynamically by JS -->
+  </div>
+</div>
+
+<!-- ==================== NAME DUPLICATE MODAL ==================== -->
+<div id="duplicate-modal" class="hidden">
+  <div class="modal-bg-blur"></div>
+  <div class="modal-box">
+    <h3>⚠️ 昵称已存在</h3>
+    <p id="duplicate-message"></p>
+    <div class="duplicate-options">
+      <button class="btn btn-primary" id="dup-overwrite" disabled>覆盖旧记录</button>
+      <button class="btn btn-secondary" id="dup-rename">修改昵称</button>
+      <button class="btn btn-ghost" id="dup-cancel">取消</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/audio.js"></script>
+<script src="js/mosquito.js"></script>
+<script src="js/player.js"></script>
+<script src="js/tools.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/leaderboard.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
