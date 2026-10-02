@@ -1,0 +1,91 @@
+menu "FinalWork 工程配置"
+
+    menu "TASK4 无线点灯 (Wi-Fi / 蓝牙)"
+
+        config BSP_WIFI_SSID
+            string "Wi-Fi 名称 (SSID)"
+            default "YOUR_WIFI_SSID"
+            help
+                改成你自己的 2.4GHz 路由器 / 手机热点名称（ESP32-S3 不支持 5GHz）。
+
+        config BSP_WIFI_PASSWORD
+            string "Wi-Fi 密码"
+            default "YOUR_WIFI_PASSWORD"
+            help
+                开放网络请留空。
+
+        config BSP_WIFI_MAX_RETRY
+            int "连接失败最大重试次数"
+            range 1 100
+            default 10
+
+        config BSP_WIFI_RETRY_INTERVAL_MS
+            int "重连间隔 (ms)"
+            range 500 60000
+            default 3000
+
+        config BSP_HTTP_PORT
+            int "HTTP 服务器端口"
+            range 1 65535
+            default 80
+            help
+                写 80 时浏览器 URL 里不用带端口号。
+
+        config BSP_BT_ENABLE
+            bool "启用外接蓝牙模块 HC-04D（UART1 透传）"
+            default y
+            help
+                没接模块也能编译运行，只是 BLE 指令会提示"未检测到模块"。
+
+        config BSP_BT_TX_GPIO
+            int "HC-04D TX 引脚 (ESP32 的 TXD -> 模块 RXD)"
+            range 0 48
+            default 17
+
+        config BSP_BT_RX_GPIO
+            int "HC-04D RX 引脚 (ESP32 的 RXD <- 模块 TXD)"
+            range 0 48
+            default 18
+
+        config BSP_BT_BAUD
+            int "HC-04D 串口波特率"
+            range 1200 921600
+            default 9600
+            help
+                HC-04D 出厂默认多为 9600 8N1；固件也会自动在常见波特率里扫一遍找模块。
+
+    endmenu
+
+    menu "TASK1 / TASK2 LED (GPIO + LEDC)"
+
+        config BSP_LED_PWM_FREQ_HZ
+            int "LED PWM 频率 (Hz)"
+            range 100 20000
+            default 5000
+            help
+                1~5kHz 是 LED 调光的常用区间。
+
+        choice BSP_LED_PWM_RES_CHOICE
+            prompt "LED PWM 分辨率 (bit)"
+            default BSP_LED_PWM_RES_13BIT
+            help
+                占空比档数 = 2^分辨率。约束：2^分辨率 x 频率 不能超过 APB 80MHz，
+                超了固件会自动下调分辨率并打印警告。
+
+            config BSP_LED_PWM_RES_10BIT
+                bool "10 bit (1024 档)"
+            config BSP_LED_PWM_RES_13BIT
+                bool "13 bit (8192 档)"
+            config BSP_LED_PWM_RES_15BIT
+                bool "15 bit (32768 档)"
+        endchoice
+
+        config BSP_LED_PWM_RESOLUTION
+            int
+            default 10 if BSP_LED_PWM_RES_10BIT
+            default 15 if BSP_LED_PWM_RES_15BIT
+            default 13
+
+    endmenu
+
+endmenu
