@@ -300,11 +300,11 @@ FinalWork/
 
 | TASK | 内容 | 完成度 | 运行效果 |
 |---|---|---|---|
-| **TASK1** | GPIO 点灯 | ✅ 完成 |  `docs/videos/task1_*.mp4` |
-| **TASK2** | LEDC PWM 呼吸灯 | ✅ 完成 | `docs/videos/task2_*.mp4` |
-| **TASK3** | UART 串口协议点灯 | ✅ 完成 |  `docs/videos/task3_*.mp4` |
-| **TASK4** | 无线点灯：Wi-Fi STA + HTTP 网页 | ✅ 完成Wi-Fi / HTTP | `docs/videos/task4_*.mp4` |
-| **TASK5 ** | 直流电机：启停 / 无级调速 / 方向 / 串口控制 / 自动渐变 | ✅ 完成 |  `docs/videos/task5_*.mp4` |
+| **TASK1** | GPIO 点灯 | ✅ 完成 | https://github.com/user-attachments/assets/3c0a1cde-3c77-4e96-9873-b40bfe2096fc|
+| **TASK2** | LEDC PWM 呼吸灯 | ✅ 完成 | https://github.com/user-attachments/assets/ab713bd5-802d-411f-b401-39c49ed3aada|
+| **TASK3** | UART 串口协议点灯 | ✅ 完成 |https://github.com/user-attachments/assets/6cd3defe-fb06-415a-adfc-4a733ba1f272|
+| **TASK4** | 无线点灯：Wi-Fi STA + HTTP 网页 | ✅ 完成Wi-Fi / HTTP |https://github.com/user-attachments/assets/eed41500-3118-440b-80cc-ff4095556093|
+| **TASK5 ** | 直流电机：启停 / 无级调速 / 方向 / 串口控制 / 自动渐变 | ✅ 完成 | https://github.com/user-attachments/assets/75a04eee-af2a-4231-935a-5b35bad761c6|
 | **TASK6** | EEZ Studio + LVGL 触摸屏 | ❌ **未完成** | 无|
 
 > 实际运行效果视频请见 [`docs/videos/`](docs/videos/)。
